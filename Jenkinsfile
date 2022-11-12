@@ -2,13 +2,17 @@ pipeline {
     agent any 
     stages {
         stage('Compile and Clean') { 
-            steps {
-                // Run Maven on a Unix agent.
-              
+            steps {              
                 sh "mvn clean compile"
             }
         }
-        stage('deploy') { 
+        stage('Unit Test') { 
+            
+            steps {
+                sh "mvn test"
+            }
+        }
+        stage('Deploy') { 
             
             steps {
                 sh "mvn package"
@@ -17,7 +21,7 @@ pipeline {
         stage('Build Docker image'){
           
             steps {
-                echo "Hello Java Express"
+                echo "Hello Shashikant"
                 sh 'ls'
                 sh 'docker build -t  spandit/docker_jenkins_springboot:${BUILD_NUMBER} .'
             }
